@@ -2,8 +2,10 @@ package sc;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -14,6 +16,24 @@ import java.util.Set;
 public class City {
 	public List<House> houses = new ArrayList<House>();
 	public Map<Integer, Set<House>> clasters = new HashMap<Integer, Set<House>>();
+	
+	/**
+	 * 
+	 * @param f ha null akkor syso
+	 * @throws FileNotFoundException 
+	 */
+	public void write(File f) throws FileNotFoundException{
+		PrintStream out = System.out;
+		if(f != null){
+			out = new PrintStream(f);
+		}
+		out.println(houses.size());
+		for(House h : houses){
+			out.println(h.id +":"+ h.xPos +" "+ h.yPos);
+		}
+		out.flush();
+		out.close();
+	}
 
 	public static City loadCity(File bld, File cfg) throws IOException{
 		City city = new City();
@@ -49,7 +69,8 @@ public class City {
 	}
 	
 	public static void main(String[] args)throws Exception{
-		City.loadCity(new File(args[0]), new File(args[1]));
+		City c = loadCity(new File(args[0]), new File(args[1]));
+		c.write(null);
 	}
 
 }
