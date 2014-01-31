@@ -1,6 +1,6 @@
 package sc;
 
-public class House {
+public class House implements Comparable<House> {
 	
 	public int width, height, length, xPos, yPos, id, claster;
 
@@ -13,6 +13,10 @@ public class House {
 		xPos = 0;
 		yPos = 0;
 	}
+	
+	public int getArea(){
+		return length*width;
+	}
 
 	@Override
 	public String toString() {
@@ -20,7 +24,23 @@ public class House {
 				+ length + ", xPos=" + xPos + ", yPos=" + yPos + ", id=" + id
 				+ ", claster=" + claster + "]";
 	}
-	
-	
 
+	@Override
+	public int compareTo(House o) {
+		if(xPos < o.xPos){
+			return -1;
+		}else if(xPos == o.xPos){
+			if(yPos < o.yPos){
+				return -1;
+			}
+			else if(yPos == o.yPos){
+				return 0;
+			}else{
+				return 1;
+			}
+		}else{
+			return 1;
+		}
+	}
+	
 }
